@@ -1,0 +1,23 @@
+schema: spec-driven
+
+# Contexto del proyecto
+context: |
+  Tech stack: Python 3.x
+  Domain: CLI Juego (Legacy Mode)
+  Description: Un juego de Tic Tac Toe (Gato) que se ejecuta totalmente en la terminal.
+  Style: Programación procedimental o POO básica, sin dependencias externas.
+  Constraints: 
+    - Solo usar caracteres ASCII o UNICODE para el tablero.
+    - No utilizar librerías gráficas (Tkinter, PyGame, etc.) (por ahora)
+    - La interfaz debe ser mediante print() e input().
+
+# Reglas por artefacto
+rules:
+  proposal:
+    - Definir claramente la estructura del tablero (ej. una lista de 9 elementos).
+    - Explicar cómo se validarán las victorias (filas, columnas y diagonales).
+  tasks:
+    - Implementar una función dedicada exclusivamente a dibujar el tablero en ASCII.
+    - Asegurar que el manejo de turnos sea robusto ante entradas inválidas del usuario.
+    - Crear una función para verificar el estado del juego después de cada movimiento (ganador, empate, o continuar).
+    - Por ahora, no implementar una IA para el oponente; el juego será para dos jugadores humanos.
