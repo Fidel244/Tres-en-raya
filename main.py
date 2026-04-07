@@ -52,54 +52,69 @@ def mostrar_menu():
     print("\n=== Tic Tac Toe ===")
     print("1. Iniciar partida")
     print("2. Salir")
+    print("3. Elegir símbolo")
     opcion = input("Elige una opción: ")
     return opcion
 
-def jugar():
+def jugar(simbolo_jugador1='X', simbolo_jugador2='O', jugador_inicial='X'):
     """Función que ejecuta una partida completa."""
     tablero = [str(i+1) for i in range(9)]  # Inicializar con '1' a '9'
-    jugador_actual = 'X'
+    current_player = 1 if simbolo_jugador1 == jugador_inicial else 2
 
-    print("\n¡Bienvenido al Tic Tac Toe!")
-    print("Jugador X comienza. Ingresa un número del 1 al 9 para colocar tu marca.")
+    print(f"\n¡Bienvenido al Tic Tac Toe!")
+    print(f"Jugador {current_player} ({jugador_inicial}) comienza. Ingresa un número del 1 al 9 para colocar tu marca.")
 
     while True:
         dibujar_tablero(tablero)
         estado = verificar_estado_juego(tablero)
 
-        if estado == 'X':
-            print("¡Jugador X gana!")
+        if estado == simbolo_jugador1:
+            print("¡Jugador 1 (x) gana!")
             return
-        elif estado == 'O':
-            print("¡Jugador O gana!")
+        elif estado == simbolo_jugador2:
+            print("¡Jugador 2 (o)gana!")
             return
         elif estado == 'empate':
             print("¡Es un empate!")
             return
 
+        simbolo_actual = simbolo_jugador1 if current_player == 1 else simbolo_jugador2
         try:
-            movimiento = int(input(f"Jugador {jugador_actual}, elige una posición (1-9): ")) - 1
+            movimiento = int(input(f"Jugador {current_player} ({simbolo_actual}), elige una posición (1-9): ")) - 1
             if movimiento < 0 or movimiento > 8:
                 print("Posición inválida. Debe ser un número del 1 al 9.")
                 continue
             if tablero[movimiento] in ['X', 'O']:
                 print("Esa posición ya está ocupada. Elige otra.")
                 continue
-            tablero[movimiento] = jugador_actual
-            jugador_actual = 'O' if jugador_actual == 'X' else 'X'
+            tablero[movimiento] = simbolo_actual
+            current_player = 2 if current_player == 1 else 1
         except ValueError:
             print("Entrada inválida. Debe ser un número del 1 al 9.")
             continue
+
+def elegir_simbolo():
+    """Permite al jugador 1 elegir su símbolo."""
+    while True:
+        simbolo = input("Elige tu símbolo (X/O): ").strip().upper()
+        if simbolo in ['X', 'O']:
+            return simbolo
+        print("Símbolo inválido. Elige X o O.")
 
 def main():
     while True:
         opcion = mostrar_menu()
         match opcion:
             case '1':
-                jugar()
+                jugar('X', 'O', 'X')
             case '2':
                 print("¡Hasta luego!")
                 break
+            case '3':
+                simbolo_jugador1 = elegir_simbolo()
+                simbolo_jugador2 = 'O' if simbolo_jugador1 == 'X' else 'X'
+                jugador_inicial = simbolo_jugador1
+                jugar(simbolo_jugador1, simbolo_jugador2, jugador_inicial)
             case _:
                 print("Opción inválida. Intenta de nuevo.")
 
