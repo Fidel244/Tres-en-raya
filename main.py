@@ -47,11 +47,20 @@ def verificar_estado_juego(tablero):
 
     return 'continuar'
 
-def main():
+def mostrar_menu():
+    """Muestra el menú principal y retorna la opción elegida."""
+    print("\n=== Tic Tac Toe ===")
+    print("1. Iniciar partida")
+    print("2. Salir")
+    opcion = input("Elige una opción: ")
+    return opcion
+
+def jugar():
+    """Función que ejecuta una partida completa."""
     tablero = [str(i+1) for i in range(9)]  # Inicializar con '1' a '9'
     jugador_actual = 'X'
 
-    print("¡Bienvenido al Tic Tac Toe!")
+    print("\n¡Bienvenido al Tic Tac Toe!")
     print("Jugador X comienza. Ingresa un número del 1 al 9 para colocar tu marca.")
 
     while True:
@@ -60,13 +69,13 @@ def main():
 
         if estado == 'X':
             print("¡Jugador X gana!")
-            break
+            return
         elif estado == 'O':
             print("¡Jugador O gana!")
-            break
+            return
         elif estado == 'empate':
             print("¡Es un empate!")
-            break
+            return
 
         try:
             movimiento = int(input(f"Jugador {jugador_actual}, elige una posición (1-9): ")) - 1
@@ -81,6 +90,18 @@ def main():
         except ValueError:
             print("Entrada inválida. Debe ser un número del 1 al 9.")
             continue
+
+def main():
+    while True:
+        opcion = mostrar_menu()
+        match opcion:
+            case '1':
+                jugar()
+            case '2':
+                print("¡Hasta luego!")
+                break
+            case _:
+                print("Opción inválida. Intenta de nuevo.")
 
 if __name__ == "__main__":
     main()
